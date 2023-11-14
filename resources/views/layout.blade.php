@@ -4,10 +4,11 @@
         <title>
             @yield('title', 'Blog')
         </title>
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
     </head>
     <body>
 
-        <ul>
+        <ul class="nav">
             <li><a href="{{ route('home') }}">Home</a></li>
             <li><a href="{{ route('about') }}">About</a></li>
         </ul>
