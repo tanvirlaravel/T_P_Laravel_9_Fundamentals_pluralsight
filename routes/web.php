@@ -1,29 +1,29 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'home'] )->name('home');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('posts/create', function(){
-    return view('create');
-})->name('posts.create');
+Route::name('posts.')->prefix('posts')->group(function(){
 
-Route::post('posts', function(Request $request){
+    Route::get('/create', function(){
+        return view('posts.create');
+    })->name('create');
 
-    $request->validate([
-        'title' => 'required',
-        'description' => ['required', 'min:10']
-    ]);
-    return redirect()
-            ->route('posts.create')
-            ->with('success', 'Post is submitted! Title: ' . $request->input('title') . 'Descriptiosn: ' .$request->input('description'));
+    Route::post('/', function(Request $request){
 
-})->name('posts.store');
+        $request->validate([
+            'title' => 'required',
+            'description' => ['required', 'min:10']
+        ]);
+        return redirect()
+                ->route('posts.create')
+                ->with('success', 'Post is submitted! Title: ' . $request->input('title') . 'Descriptiosn: ' .$request->input('description'));
+
+    })->name('store');
+});
