@@ -14,20 +14,15 @@
             <li><a class="{{ request()->routeIs('posts.create') ? 'active' : '' }}" href="{{ route('posts.create') }}">Posts create</a></li>
         </ul>
 
+        @includeWhen($errors->any(), '_error')
+
         @if(session('success'))
             <div class="flash-success">
                 {{ session('success') }}
             </div>
         @endif
 
-        @if($errors->any())
-            <div class="flash-error">
-                <p>There are some error in your submission</p>
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
+
 
         <div  class="main">
             @yield('content')
